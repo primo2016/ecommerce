@@ -31,19 +31,25 @@ final class EloquentProductRepository implements ProductRepository
 
     public function update(Product $product): void
     {
-        ModelsProduct::findOrFail($product->getId())->update(
+        $collCategories = collect($product->getCategories());
+        $categoryIds = $collCategories->pluck('id')->toArray();
+
+        $model = ModelsProduct::findOrFail($product->getId());
+
+        $model->update(
             [
                 'name' => $product->getName(),
                 'amount' => $product->getAmount(),
                 'description' => $product->getDescription()
             ]
         );
+        $model->categories()->sync($categoryIds);
     }
 
     public function search(int $id): ?Product
     {
         $model = null;
-        $model = ModelsProduct::with('categories')->find($id);
+        $model = ModelsProduct::with('categories.discountCode')->find($id);
 
         if (null === $model) {
             return null;
@@ -54,6 +60,7 @@ final class EloquentProductRepository implements ProductRepository
                 $category['name'],
                 $category['description'],
                 $category['id'],
+                $category['discount_code']['percent'] ?? null
             ),
             $model->categories->toArray()
         );
@@ -79,7 +86,19 @@ final class EloquentProductRepository implements ProductRepository
     public function searchAll(): array
     {
         $models = [];
-        $models = ModelsProduct::with('categories')->get();
+        $models = ModelsProduct::with('categories.discountCode')->get();
+
+        $arrModels = map($this->toArrayFromModel(),$models);
+
+        return map($this->toProduct(), $arrModels);
+    }
+
+    public function searchAllByIds(array $ids): array
+    {
+        $models = [];
+        $models = ModelsProduct::with('categories.discountCode')
+            ->whereIn("id", $ids)
+            ->get();
 
         $arrModels = map($this->toArrayFromModel(),$models);
 
@@ -102,7 +121,8 @@ final class EloquentProductRepository implements ProductRepository
                 fn(array $category) => new Category(
                     $category['name'],
                     $category['description'],
-                    $category['id']
+                    $category['id'],
+                    $category['discount_code']['percent'] ?? null
                 ),
                 $product->categories->toArray()
             )

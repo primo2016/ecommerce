@@ -26,4 +26,12 @@ Route::group(['prefix' => 'core/v1'], function() {
         Route::put('/{id}', App\Http\Controllers\DiscountCode\DiscountCodePutController::class);
         Route::delete('/{id}', App\Http\Controllers\DiscountCode\DiscountCodeDeleteController::class);
     });
+
+    Route::prefix('code')->group(function() {
+        Route::get('/{code}', App\Http\Controllers\DiscountCode\DiscountCodeGetByNameController::class);
+    });
+
+    Route::prefix('order')->group(function() {
+        Route::post('/', App\Http\Controllers\Order\OrderPostController::class);
+    });
 });

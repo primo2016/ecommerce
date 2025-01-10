@@ -15,4 +15,6 @@ interface ProductRepository
     public function searchByName(string $productName): ?Product;
 
     public function searchAll(): array;
+
+    public function searchAllByIds(array $products): array;
 }

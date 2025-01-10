@@ -52,10 +52,10 @@ final class EloquentDiscountCodeRepository implements DiscountCodeRepository
         ModelsDiscountCode::findOrFail($discountCode->getId())->delete();
     }
 
-    public function searchByName(string $discountCodeName): ?DiscountCode
+    public function searchByName(string $code): ?DiscountCode
     {
 
-        $model = ModelsDiscountCode::where("name", $discountCodeName)->first();
+        $model = ModelsDiscountCode::where("name", $code)->first();
         if (null === $model) {
             return null;
         }

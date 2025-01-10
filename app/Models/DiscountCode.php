@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DiscountCode extends Model
 {
-    protected $fillable = ['name', '', 'category_id'];
+    protected $fillable = ['name', 'percent', 'category_id'];
 
     public function post(): BelongsTo
     {
