@@ -37,7 +37,7 @@ final class EloquentCategoryRepository implements CategoryRepository
     {
 
         $model = null;
-        $model = ModelsCategory::find($id);
+        $model = ModelsCategory::with('discountCode')->find($id);
         if (null === $model) {
             return null;
         }
@@ -49,7 +49,7 @@ final class EloquentCategoryRepository implements CategoryRepository
         ModelsCategory::findOrFail($category->getId())->delete();
     }
 
-    public function searchByName(string $name): ?Category
+    public function searchByName(string $name): ?Category   
     {
 
         $model = ModelsCategory::where("name", $name)->first();
@@ -63,7 +63,7 @@ final class EloquentCategoryRepository implements CategoryRepository
     {
         $collResult = [];
 
-        $collResult = ModelsCategory::with('discountCodes')->whereIn('id', $category_ids)->get()->toArray();
+        $collResult = ModelsCategory::with('discountCode')->whereIn('id', $category_ids)->get()->toArray();
 
         return map($this->toCategory(), $collResult);
     }

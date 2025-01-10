@@ -36,7 +36,8 @@ class ProductGetAllController extends Controller
                         'name'     => $response->name(),
                         'amount'     => $response->amount(),
                         'description' => $response->description(),
-                        'categories'    => $response->categories()
+                        'discountToApply' => $response->discountToApply(),
+                        'categories'    => $response->categories(),
                     ],
                     $response->products()
                 ),]);

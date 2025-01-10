@@ -87,7 +87,8 @@ final class Product
             fn(Category $category) => [
                 'id' => $category->getId(),
                 'name' => $category->getName(),
-                'description' => $category->getDescription()
+                'description' => $category->getDescription(),
+                'discountAssigned' => $category->getDiscountAssigned()
             ],$this->getCategories());
     }
 }

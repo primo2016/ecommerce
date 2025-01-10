@@ -33,7 +33,8 @@ class CategoryGetController extends Controller
                 'data' => [
                     'id'       => $category->getId(),
                     'name'     => $category->getName(),
-                    'description' => $category->getDescription()
+                    'description' => $category->getDescription(),
+                    'discountAssigned' => $category->getDiscountAssigned()
                 ]
             ]);
         } catch (CategoryNotFound $ex) {

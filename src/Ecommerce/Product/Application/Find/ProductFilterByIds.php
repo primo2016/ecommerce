@@ -10,7 +10,7 @@ use Core\Ecommerce\Product\Application\ProductsResponse;
 
 use function Lambdish\Phunctional\map;
 
-final class ProductSearcherAll
+final class ProductFilterByIds
 {
     private $repository;
 
@@ -19,9 +19,9 @@ final class ProductSearcherAll
         $this->repository = $repository;
     }
 
-    public function __invoke()
+    public function __invoke(array $productIds)
     {
-        return $this->getAsResponse();
+        return $this->getAsResponse($productIds);
     }
 
     private function toResponse(): callable
@@ -36,9 +36,9 @@ final class ProductSearcherAll
         );
     }
 
-    private function getAsResponse()
+    private function getAsResponse($productIds)
     {
-        $resultArray = $this->repository->searchAll();
+        $resultArray = $this->repository->searchAllByIds($productIds);
 
         if (empty($resultArray)) {
             throw new ProductsNotFound;

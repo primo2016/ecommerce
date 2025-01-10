@@ -12,7 +12,8 @@ final class ProductResponse
         private string $name,
         private string $description,
         private float $amount,
-        private array $categories
+        private array $categories,
+        private ?int $discountToApply,
     ) {}
 
     public function id(): string
@@ -33,6 +34,11 @@ final class ProductResponse
     public function description(): string
     {
         return $this->description;
+    }
+
+    public function discountToApply(): ?int
+    {
+        return $this->discountToApply;
     }
 
     public function categories(): array

@@ -6,12 +6,9 @@ use Core\Exception\DomainError;
 
 final class DiscountCodeNotFound extends DomainError
 {
-    private $id;
 
-    public function __construct(string $id)
+    public function __construct(private string $id, private string $displayField = 'id')
     {
-        $this->id = $id;
-
         parent::__construct();
     }
 
@@ -22,6 +19,6 @@ final class DiscountCodeNotFound extends DomainError
 
     protected function errorMessage(): string
     {
-        return sprintf('El código de descuento con id: <%s> no fue encontrado.', $this->id);
+        return sprintf('El descuento con %s: <%s> no fue encontrado.', $this->displayField, $this->id);
     }
 }
