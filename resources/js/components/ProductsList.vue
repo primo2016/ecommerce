@@ -3,10 +3,9 @@ import { useProductStore } from '@/composables/useProducts';
 import { ProductResponse } from '@/interfaces/ecommerce-interface';
 import { onMounted, ref } from 'vue';
 
-
 const productStore = useProductStore();
 
-const { isLoading, getProducts, storeToCart, existInCart } = productStore;
+const { getProducts, storeToCart, existInCart } = productStore;
 
 const products = ref<ProductResponse[]>();
 const alertMessage = ref<string>();
@@ -22,8 +21,6 @@ const addToCart = (product: ProductResponse) => {
   } else {
     storeToCart(product);
   }
-  console.log('addToCart');
-
 };
 
 const showAlert = (message: string) => {
