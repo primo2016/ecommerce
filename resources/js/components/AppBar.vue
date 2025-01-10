@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, toRefs } from 'vue';
-import DialogCart from './DialogCart.vue';
+import { ref } from 'vue';
 import { useProductStore } from '@/composables/useProducts';
+import DialogCart from './DialogCart.vue';
 
 const productStore = useProductStore();
 const { productsCart } = productStore;
